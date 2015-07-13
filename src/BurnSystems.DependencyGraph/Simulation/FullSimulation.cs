@@ -21,7 +21,11 @@ namespace BurnSystems.DependencyGraph.Simulation
 
         private KeepWithinBorderSimulation keepWithinSimulation;
 
+        private MinimumDistanceForceSimulation minimumDistanceSimulation;
+
         private MoveSimulation moveSimulation;
+
+        private Vector2d area;
 
         public TimeSpan LoopTime
         {
@@ -29,8 +33,9 @@ namespace BurnSystems.DependencyGraph.Simulation
             set;
         }
 
-        public FullSimulation(Graph graph)
+        public FullSimulation(Graph graph, Vector2d area)
         {
+            this.area = area;
             this.LoopTime = TimeSpan.FromSeconds(0.1);
 
             this.graph = graph;
@@ -47,13 +52,33 @@ namespace BurnSystems.DependencyGraph.Simulation
 
             this.keepWithinSimulation = new KeepWithinBorderSimulation(
                 graph,
-                new KeepWithinBorderSimulationSettings());
+                new KeepWithinBorderSimulationSettings()
+                {
+                    Min = Vector2d.Zero(),
+                    Max = this.area
+                });
 
             this.moveSimulation = new MoveSimulation(
                 graph,
                 new MoveSimulationSettings()
                 {
                 });
+
+            this.minimumDistanceSimulation = new MinimumDistanceForceSimulation(
+                graph,
+                new MinimumDistanceForceSimulationSettings()
+                {
+                });
+        }
+
+        public void ResetNodes()
+        {
+            var random = new Random();
+            foreach (var node in this.graph.Nodes)
+            {
+                node.Position = new Vector2d(random.NextDouble() * area.X, random.NextDouble() * area.Y);
+
+            }
         }
 
         public void Loop()
@@ -61,6 +86,7 @@ namespace BurnSystems.DependencyGraph.Simulation
             this.zeroForces.Loop(this.LoopTime);
             this.forceSimulation.Loop(this.LoopTime);
             this.keepWithinSimulation.Loop(this.LoopTime);
+            this.minimumDistanceSimulation.Loop(this.LoopTime);
 
             this.moveSimulation.Loop(this.LoopTime);
         }

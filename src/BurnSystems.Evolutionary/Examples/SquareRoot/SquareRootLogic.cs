@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BurnSystems.Evolutionary.Examples.SquareRoot
@@ -35,10 +36,33 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
 
         public DoubleIndividual Generate(Random random)
         {
+            Interlocked.Increment(ref calculationCount);
+            
             return new DoubleIndividual()
             {
                 Value = random.NextDouble() * this.SquareRootOf
             };
+        }
+
+        public override string ToString()
+        {
+            return
+                "Looking for: Sqrt(" +
+                this.SquareRootOf.ToString() +
+                ") = " + Math.Sqrt(this.SquareRootOf).ToString() + "]";
+        }
+
+
+        private static int calculationCount = 0;
+
+        public static void ResetCalculationCount()
+        {
+            calculationCount = 0;
+        }
+
+        public static int GetCalculationCount()
+        {
+            return calculationCount;
         }
     }
 }

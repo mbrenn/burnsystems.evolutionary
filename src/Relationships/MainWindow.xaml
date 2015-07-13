@@ -4,8 +4,13 @@
         xmlns:local="clr-namespace:Relationships" x:Class="Relationships.MainWindow"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
         <local:GraphView x:Name="GraphView" />
-
+        <StackPanel Grid.Column="2">
+            <Button Click="Restart_Click">Restart</Button>
+        </StackPanel>
     </Grid>
 </Window>

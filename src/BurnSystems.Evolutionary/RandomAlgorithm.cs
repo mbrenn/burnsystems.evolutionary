@@ -25,6 +25,9 @@ namespace BurnSystems.Evolutionary
             this.logic = logic;
         }
 
+        private ThreadLocal<Random> randomLocal = new ThreadLocal<Random>(
+            () => new Random(Environment.TickCount ^ new Guid().GetHashCode()), false);
+
         /// <summary>
         /// Runs the algorithm and returns the best individual
         /// </summary>
@@ -37,7 +40,7 @@ namespace BurnSystems.Evolutionary
             if (!this.AsParallel)
             {
                 var rnd = new Random();
-                for ( var n = 0; n < this.Individuals; n++ )
+                for (var n = 0; n < this.Individuals; n++)
                 {
                     var individual = this.logic.Generate(rnd);
                     var current = this.logic.GetFitness(individual);
@@ -54,20 +57,20 @@ namespace BurnSystems.Evolutionary
                 Parallel.For<Local>(
                     0,
                     this.Individuals,
-                   () => new Local(),
-                   (n, t, local) =>
-                   {
-                       var individual = this.logic.Generate(local.Random);
-                       var current = this.logic.GetFitness(individual);
+                    () => new Local(),
+                    (n, t, local) =>
+                    {
+                        var individual = this.logic.Generate(this.randomLocal.Value);
+                        var current = this.logic.GetFitness(individual);
 
-                       if (current > local.MaxValue)
-                       {
-                           local.MaxValue = current;
-                           local.Individual = individual;
-                       }
+                        if (current > local.MaxValue)
+                        {
+                            local.MaxValue = current;
+                            local.Individual = individual;
+                        }
 
-                       return local;
-                   },
+                        return local;
+                    },
                 (local) =>
                 {
                     if (local.MaxValue > max)
@@ -85,14 +88,12 @@ namespace BurnSystems.Evolutionary
         {
             public double MaxValue;
             public Individual Individual;
-            public Random Random;
 
             public static int Count;
 
             public Local()
             {
                 Interlocked.Increment(ref Count);
-                this.Random = new Random();
                 this.MaxValue = Double.MinValue;
             }
         }

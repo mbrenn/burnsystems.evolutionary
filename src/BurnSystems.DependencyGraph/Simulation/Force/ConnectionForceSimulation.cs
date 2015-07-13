@@ -34,17 +34,22 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
                 var node2 = connection.Node2;
 
                 var distance = Vector2d.GetDistance(node1.Position, node2.Position);
+                if (distance < 0.1)
+                {
+                    // Jitter
+                    distance = 0.1;
+                }
 
                 var forceS = this.Settings.DistanceToForceFct(distance);
                 forceS *= this.Settings.ForceFactor;
                 forceS *= connection.Connectivity;
 
-                var dX = node1.Position.X - node2.Position.X;
-                var dY = node1.Position.Y - node2.Position.Y;
+                var dX = Math.Max(0.1, node1.Position.X - node2.Position.X);
+                var dY = Math.Max(0.1, node1.Position.Y - node2.Position.Y);
 
                 Vector2d force = new Vector2d(forceS * dX / distance, forceS * dY / distance);
-                node1.ForceN = force.Negate();
-                node2.ForceN = force;
+                node1.ForceN.AddTo(force.Negate());
+                node2.ForceN.AddTo(force);
             }
         }
     }

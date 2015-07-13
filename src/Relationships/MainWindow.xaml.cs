@@ -44,17 +44,33 @@ namespace Relationships
         {
             var graph = new Graph();
             var node1 = new Node("Vater");
-            node1.Position= new Vector2d(50.0, 0.0);
             var node2 = new Node("Mutter");     
-            node2.Position = new Vector2d(200.0, 50.0);
             var node3 = new Node("Sohn");
+            var node4 = new Node("Enkel 1");
+            var node5 = new Node("Enkel 2");
+            var node6 = new Node("Großenkel 1");
+            var node7 = new Node("Großenkel 2");
+            var node8 = new Node("Großenkel 3");
+            var node9 = new Node("Großenkel 4");
 
             graph.Nodes.Add(node1);
             graph.Nodes.Add(node2);
             graph.Nodes.Add(node3);
+            graph.Nodes.Add(node4);
+            graph.Nodes.Add(node5);
+            graph.Nodes.Add(node6);
+            graph.Nodes.Add(node7);
+            graph.Nodes.Add(node8);
+            graph.Nodes.Add(node9);
 
             graph.Connectivities.Add(new Connection(node1, node3, 1.0));            
             graph.Connectivities.Add(new Connection(node2, node3, 1.0));
+            graph.Connectivities.Add(new Connection(node3, node4, 1.0));
+            graph.Connectivities.Add(new Connection(node3, node5, 1.0));
+            graph.Connectivities.Add(new Connection(node4, node6, 1.0));
+            graph.Connectivities.Add(new Connection(node4, node7, 1.0));
+            graph.Connectivities.Add(new Connection(node5, node8, 1.0));
+            graph.Connectivities.Add(new Connection(node5, node9, 1.0));
 
             this.GraphView.Graph = graph;
                 
@@ -67,7 +83,8 @@ namespace Relationships
 
             this.timer.Start();
 
-            this.fullSimulation = new FullSimulation(graph);
+            this.fullSimulation = new FullSimulation(graph, new Vector2d(300.0, 300.0));
+            this.fullSimulation.ResetNodes();
         }
 
         public void OnAnimation()
@@ -75,6 +92,15 @@ namespace Relationships
             this.fullSimulation.Loop();
 
             this.GraphView.InvalidateGraph();
+        }
+
+        private void Restart_Click(object sender, RoutedEventArgs e)
+        {
+            this.timer.Stop();
+            this.timer = null;
+
+            this.InitializeGraph();
+
         }
     }
 }

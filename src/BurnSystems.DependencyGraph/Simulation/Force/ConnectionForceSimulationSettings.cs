@@ -37,7 +37,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
             this.ForceFactor = 1.0;
             this.DistanceToForceFct = x => 1.0 / (x * x);
             this.PositiveForceFactor = 0.1;
-            this.NegativeForceFactor = 0.01;
+            this.NegativeForceFactor = 0.1;
         }
 
         public void SetDistanceFunctionOptimalDistance(double d)
@@ -47,7 +47,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
                     var dX = x - d;
                     if (dX < 1.0)
                     {
-                        return dX * this.NegativeForceFactor;
+                        return (dX + 0.01) * this.NegativeForceFactor;
                     }
                     else
                     {

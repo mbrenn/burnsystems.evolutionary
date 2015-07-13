@@ -35,6 +35,12 @@ namespace BurnSystems.DependencyGraph
             return new Vector2d(-this.X, -this.Y);
         }
 
+        public void AddTo(Vector2d force)
+        {
+            this.X += force.X;
+            this.Y += force.Y;
+        }
+
         public override string ToString()
         {
             return string.Format("{0}, {1}", this.X, this.Y);

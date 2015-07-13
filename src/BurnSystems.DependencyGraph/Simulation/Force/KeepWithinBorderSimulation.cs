@@ -26,6 +26,10 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
         public void Loop(TimeSpan loopTime)
         {
+            var c = new Vector2d(
+                (this.Settings.Max.X + this.Settings.Min.X) / 2,
+                (this.Settings.Max.Y + this.Settings.Min.Y) / 2);
+
             foreach (var node in this.graph.Nodes)
             {
                 if (node.Position.X < this.Settings.Min.X)
@@ -47,6 +51,9 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
                 {
                     node.ForceN.Y -= this.Settings.Force;
                 }
+
+                node.ForceN.X -= (node.Position.X - c.X) / 100;
+                node.ForceN.Y -= (node.Position.Y - c.Y) / 100;
             }
         }
     }

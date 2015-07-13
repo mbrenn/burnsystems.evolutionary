@@ -13,5 +13,10 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
             get;
             set;
         }
+
+        public override string ToString()
+        {
+            return this.Value.ToString();
+        }
     }
 }

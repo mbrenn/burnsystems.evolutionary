@@ -13,45 +13,74 @@ namespace TestRunner
     {
         public static void Main(string[] args)
         {
-            var individuals = 10000000;
+            var requested = 5.0;
+            var logic = new SquareRootLogic(requested);
+
+            double notAsParallel = 0.0;
+            double asParallel = 0.0;
+            for (var n = 0; n < 10000; n++)
+            {
+                notAsParallel+= logic.GetFitness(Execute(logic, asParallel: false));
+
+                asParallel += logic.GetFitness(Execute(logic, asParallel: true));
+
+                Console.WriteLine(n.ToString());
+            }                
+
+            Console.WriteLine(); 
+            Console.WriteLine(" - NotAsParallel: " + notAsParallel.ToString());
+            Console.WriteLine(" - AsParallel: " + asParallel.ToString());
+
+            Console.WriteLine(" - Quotient: " + (asParallel / notAsParallel).ToString());
+            Console.WriteLine();
+            Console.ReadKey();
+            
+            var vectorLogic = new SquareRootVectorLogic(10);
+            Execute(vectorLogic, false);
+            Execute(vectorLogic, true);
+            Console.ReadKey();
+        }
+
+        public static T Execute<T>(IIndividualLogic<T> logic, bool asParallel) where T : IIndividual
+        {
             var watch = new Stopwatch();
             watch.Start();
-            var requested = 5.0;
-            var algo = new RandomAlgorithm<DoubleIndividual>(
-                new SquareRootLogic(requested))
-                {
-                    Individuals = individuals
-                };
+
+            var individuals = 10000;
+            var algo = new RandomAlgorithm<T>(logic)
+            {
+                Individuals = individuals
+            };
 
             algo.AsParallel = false;
             var result = algo.Run();
             watch.Stop();
 
-            Console.WriteLine("Classic");
-            Console.WriteLine("Found: " + result.Value + " = > " + (result.Value * result.Value));
-            Console.WriteLine("Time: " + watch.Elapsed.ToString());
+            /*Console.WriteLine("Classic");
+            Console.WriteLine("Found: " + result.ToString() + " = > " + (logic.ToString()));
+            Console.WriteLine("Fitness: " + logic.GetFitness(result).ToString());
+            Console.WriteLine("Time: " + watch.Elapsed.ToString());*/
 
             watch = new Stopwatch();
             watch.Start();
-            algo = new RandomAlgorithm<DoubleIndividual>(
-                        new SquareRootLogic(requested))
-                {
-                    Individuals = individuals
-                };
+            algo = new RandomAlgorithm<T>(logic)
+            {
+                Individuals = individuals
+            };
             algo.AsParallel = true;
 
             result = algo.Run();
 
             watch.Stop();
 
+            /*Console.WriteLine();
             Console.WriteLine("As Parallel");
-            Console.WriteLine("Found: " + result.Value + " = > " + (result.Value * result.Value));
+            Console.WriteLine("Found: " + result.ToString() + " = > " + (logic.ToString()));
+            Console.WriteLine("Fitness: " + logic.GetFitness(result).ToString());
             Console.WriteLine("Time: " + watch.Elapsed.ToString());
-            Console.WriteLine("Tasks: " + RandomAlgorithm<DoubleIndividual>.Local.Count);
+            Console.WriteLine("Tasks: " + RandomAlgorithm<DoubleIndividual>.Local.Count);*/
 
-            result = algo.Run();
-            Console.ReadKey();
-
+            return result;
         }
     }
 }
