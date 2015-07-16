@@ -29,7 +29,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
                 builder.Append(komma);
                 komma = "; ";
                 builder.Append(
-                    Math.Round(this.Values[n], 3).ToString());
+                    Math.Round(this.Values[n] * this.Values[n], 3).ToString());
             }
 
             builder.Append("}");

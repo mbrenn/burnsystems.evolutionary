@@ -30,7 +30,13 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
 
             else
             {
-                return 1.0 / Math.Abs((value * value) - this.SquareRootOf);
+                var diff = Math.Abs((value * value) - this.SquareRootOf);
+                if (diff == 0)
+                {
+                    return 100;
+                }
+
+                return Math.Log10(1.0 / diff);
             }
         }
 
@@ -44,14 +50,26 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
             };
         }
 
-        public override string ToString()
+        /// <summary>
+        /// Mutates the given individual by the given variance
+        /// </summary>
+        /// <param name="individual">Individual to be modified</param>
+        /// <param name="variance">Variance for random</param>
+        public DoubleIndividual Mutate(Random random, DoubleIndividual individual, double variance)
         {
-            return
-                "Looking for: Sqrt(" +
-                this.SquareRootOf.ToString() +
-                ") = " + Math.Sqrt(this.SquareRootOf).ToString() + "]";
+            return new DoubleIndividual()
+            {
+                Value = individual.Value + (random.NextDouble() * variance) - (0.5 * variance)
+            };
         }
 
+        public override string ToString()
+        {
+            return string.Format(
+                "Looking for: Sqrt({0}) = '{1}'",
+                this.SquareRootOf.ToString(),
+                Math.Sqrt(this.SquareRootOf).ToString());
+        }
 
         private static int calculationCount = 0;
 

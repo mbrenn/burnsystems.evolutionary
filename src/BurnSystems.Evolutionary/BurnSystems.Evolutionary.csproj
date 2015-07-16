@@ -41,6 +41,9 @@
     <Compile Include="Examples\SquareRoot\DoubleVectorIndividual.cs" />
     <Compile Include="Examples\SquareRoot\SquareRootLogic.cs" />
     <Compile Include="Examples\SquareRoot\SquareRootVectorLogic.cs" />
+    <Compile Include="GeneticAlgorithm.cs" />
+    <Compile Include="GeneticAlgorithmSettings.cs" />
+    <Compile Include="GeneticIndividual.cs" />
     <Compile Include="RandomAlgorithm.cs" />
     <Compile Include="IIndividual.cs" />
     <Compile Include="IIndividualLogic.cs" />

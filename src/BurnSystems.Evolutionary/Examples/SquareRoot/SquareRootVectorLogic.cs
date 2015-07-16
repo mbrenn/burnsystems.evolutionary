@@ -21,7 +21,26 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
             for (var n = 0; n < this.size; n++)
             {
                 var v = individual.Values[n];
-                result *= 1.0 / ((v * v) - (n + 1));
+                var diff = Math.Abs((v * v) - (n + 1));
+                result += Math.Log10(1.0 / diff);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Mutates the given individual by the given variance
+        /// </summary>
+        /// <param name="individual">Individual to be modified</param>
+        /// <param name="variance">Variance for random</param>
+        public DoubleVectorIndividual Mutate(Random random, DoubleVectorIndividual individual, double variance)
+        {
+            var result = new DoubleVectorIndividual(this.size);
+            result.Values = individual.Values.ToArray();
+
+            for (var n = 0; n < result.Values.Length; n++)
+            {
+                result.Values[n] += (random.NextDouble() * variance) - (0.5 * variance);
             }
 
             return result;

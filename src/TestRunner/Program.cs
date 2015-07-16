@@ -14,72 +14,100 @@ namespace TestRunner
         public static void Main(string[] args)
         {
             var requested = 5.0;
-            var logic = new SquareRootLogic(requested);
-
-            double notAsParallel = 0.0;
-            double asParallel = 0.0;
-            for (var n = 0; n < 10000; n++)
-            {
-                notAsParallel+= logic.GetFitness(Execute(logic, asParallel: false));
-
-                asParallel += logic.GetFitness(Execute(logic, asParallel: true));
-
-                Console.WriteLine(n.ToString());
-            }                
-
-            Console.WriteLine(); 
-            Console.WriteLine(" - NotAsParallel: " + notAsParallel.ToString());
-            Console.WriteLine(" - AsParallel: " + asParallel.ToString());
-
-            Console.WriteLine(" - Quotient: " + (asParallel / notAsParallel).ToString());
-            Console.WriteLine();
-            Console.ReadKey();
+            var loops = 1;
             
+            var logic = new SquareRootLogic(requested);
+            ExecuteLoops(loops, logic);
+
             var vectorLogic = new SquareRootVectorLogic(10);
-            Execute(vectorLogic, false);
-            Execute(vectorLogic, true);
+            ExecuteLoops(loops, vectorLogic);
             Console.ReadKey();
         }
 
-        public static T Execute<T>(IIndividualLogic<T> logic, bool asParallel) where T : IIndividual
+        private static void ExecuteLoops<T>(int loops, IIndividualLogic<T> logic) where T : IIndividual
+        {
+            var notAsParallel = 0.0;
+            var asParallel = 0.0;
+            var asGenetic = 0.0;
+            for (var n = 0; n < loops; n++)
+            {
+                var best = ExecuteByRandom(logic, asParallel: false);
+                notAsParallel += logic.GetFitness(best);
+                Console.WriteLine(best.ToString());
+
+                best = ExecuteByRandom(logic, asParallel: true);
+                asParallel += logic.GetFitness(best);
+                Console.WriteLine("Random: " + best.ToString());
+
+                best = ExecuteByGenetic(logic);
+                asGenetic += logic.GetFitness(best);
+                Console.WriteLine("Genetic: " + best.ToString());
+
+                Console.WriteLine();
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(" - NotAsParallel: " + notAsParallel.ToString());
+            Console.WriteLine(" - AsParallel: " + asParallel.ToString());
+            Console.WriteLine(" - AsGenetic: " + asGenetic.ToString());
+
+            Console.WriteLine(" - Quotient: " + (asParallel / notAsParallel).ToString());
+            Console.WriteLine();
+        }
+
+        public static T ExecuteByRandom<T>(IIndividualLogic<T> logic, bool asParallel) where T : IIndividual
+        {
+            var watch = new Stopwatch();
+            watch.Start();
+            var individuals = 100000;
+
+            if (!asParallel)
+            {
+                var algo = new RandomAlgorithm<T>(logic)
+                {
+                    Individuals = individuals
+                };
+
+                algo.AsParallel = false;
+                var result = algo.Run();
+                watch.Stop();
+                return result;
+            }
+            else
+            {
+                watch = new Stopwatch();
+                watch.Start();
+                var algo = new RandomAlgorithm<T>(logic)
+                {
+                    Individuals = individuals
+                };
+                algo.AsParallel = true;
+
+                var result = algo.Run();
+
+                watch.Stop();
+
+                return result;
+            }
+        }
+
+        public static T ExecuteByGenetic<T>(IIndividualLogic<T> logic) where T : IIndividual
         {
             var watch = new Stopwatch();
             watch.Start();
 
-            var individuals = 10000;
-            var algo = new RandomAlgorithm<T>(logic)
-            {
-                Individuals = individuals
-            };
+            var algo = new GeneticAlgorithm<T>(logic,
+                new GeneticAlgorithmSettings()
+                {
+                    Individuals = 100,
+                    BirthsPerIndividual = 100,
+                    Rounds = 100
+                });
 
-            algo.AsParallel = false;
             var result = algo.Run();
             watch.Stop();
 
-            /*Console.WriteLine("Classic");
-            Console.WriteLine("Found: " + result.ToString() + " = > " + (logic.ToString()));
-            Console.WriteLine("Fitness: " + logic.GetFitness(result).ToString());
-            Console.WriteLine("Time: " + watch.Elapsed.ToString());*/
-
-            watch = new Stopwatch();
-            watch.Start();
-            algo = new RandomAlgorithm<T>(logic)
-            {
-                Individuals = individuals
-            };
-            algo.AsParallel = true;
-
-            result = algo.Run();
-
-            watch.Stop();
-
-            /*Console.WriteLine();
-            Console.WriteLine("As Parallel");
-            Console.WriteLine("Found: " + result.ToString() + " = > " + (logic.ToString()));
-            Console.WriteLine("Fitness: " + logic.GetFitness(result).ToString());
-            Console.WriteLine("Time: " + watch.Elapsed.ToString());
-            Console.WriteLine("Tasks: " + RandomAlgorithm<DoubleIndividual>.Local.Count);*/
-
+            Console.WriteLine("TIME: " + watch.Elapsed.ToString());
             return result;
         }
     }

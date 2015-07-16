@@ -20,5 +20,12 @@ namespace BurnSystems.Evolutionary
         /// </summary>
         /// <returns>The generated indivudual</returns>
         T Generate(Random random);
+
+        /// <summary>
+        /// Mutates the given individual by the given variance
+        /// </summary>
+        /// <param name="individual">Individual to be modified</param>
+        /// <param name="variance">Variance for random</param>
+        T Mutate(Random random, T individual, double variance);
     }
 }
