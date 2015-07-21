@@ -32,8 +32,8 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
         /// <param name="individual">Individual being added</param>
         public GeneticIndividual(T individual)
         {
-            this.CurrentVariance = 1.0;
-            this.Individual = individual;
+            CurrentVariance = 1.0;
+            Individual = individual;
         }
     }
 }

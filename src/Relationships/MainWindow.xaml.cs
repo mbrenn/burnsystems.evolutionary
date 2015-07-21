@@ -37,7 +37,7 @@ namespace Relationships
         {
             InitializeComponent();
 
-            this.InitializeGraph();
+            InitializeGraph();
         }
 
         public void InitializeGraph()
@@ -72,34 +72,34 @@ namespace Relationships
             graph.Connectivities.Add(new Connection(node5, node8, 1.0));
             graph.Connectivities.Add(new Connection(node5, node9, 1.0));
 
-            this.GraphView.Graph = graph;
-                
-            this.timer = new DispatcherTimer();
-            this.timer.Interval = TimeSpan.FromSeconds(0.01);
-            this.timer.Tick += (x, y) =>
+            GraphView.Graph = graph;
+
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(0.01);
+            timer.Tick += (x, y) =>
                 {
-                    this.OnAnimation();
+                    OnAnimation();
                 };
 
-            this.timer.Start();
+            timer.Start();
 
-            this.fullSimulation = new FullSimulation(graph, new Vector2d(300.0, 300.0));
-            this.fullSimulation.ResetNodes();
+            fullSimulation = new FullSimulation(graph, new Vector2d(300.0, 300.0));
+            fullSimulation.ResetNodes();
         }
 
         public void OnAnimation()
         {
-            this.fullSimulation.Loop();
+            fullSimulation.Loop();
 
-            this.GraphView.InvalidateGraph();
+            GraphView.InvalidateGraph();
         }
 
         private void Restart_Click(object sender, RoutedEventArgs e)
         {
-            this.timer.Stop();
-            this.timer = null;
+            timer.Stop();
+            timer = null;
 
-            this.InitializeGraph();
+            InitializeGraph();
 
         }
     }

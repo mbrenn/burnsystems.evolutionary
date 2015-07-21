@@ -11,7 +11,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
     {
         public SquareRootLogic(double sqrtOf)
         {
-            this.SquareRootOf = sqrtOf;
+            SquareRootOf = sqrtOf;
         }
 
         public double SquareRootOf
@@ -23,14 +23,14 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
         public double GetFitness(DoubleIndividual individual)
         {
             var value = individual.Value;
-            if (value * value == this.SquareRootOf)
+            if (value * value == SquareRootOf)
             {
                 return Double.MaxValue;
             }
 
             else
             {
-                var diff = Math.Abs((value * value) - this.SquareRootOf);
+                var diff = Math.Abs((value * value) - SquareRootOf);
                 if (diff == 0)
                 {
                     return 100;
@@ -46,7 +46,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
             
             return new DoubleIndividual()
             {
-                Value = random.NextDouble() * this.SquareRootOf
+                Value = random.NextDouble() * SquareRootOf
             };
         }
 
@@ -67,8 +67,8 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
         {
             return string.Format(
                 "Looking for: Sqrt({0}) = '{1}'",
-                this.SquareRootOf.ToString(),
-                Math.Sqrt(this.SquareRootOf).ToString());
+                SquareRootOf.ToString(),
+                Math.Sqrt(SquareRootOf).ToString());
         }
 
         private static int calculationCount = 0;

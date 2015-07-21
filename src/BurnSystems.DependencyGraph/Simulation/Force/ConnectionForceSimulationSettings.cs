@@ -34,24 +34,24 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
         public ConnectionForceSimulationSettings()
         {
-            this.ForceFactor = 1.0;
-            this.DistanceToForceFct = x => 1.0 / (x * x);
-            this.PositiveForceFactor = 0.1;
-            this.NegativeForceFactor = 0.1;
+            ForceFactor = 1.0;
+            DistanceToForceFct = x => 1.0 / (x * x);
+            PositiveForceFactor = 0.1;
+            NegativeForceFactor = 0.1;
         }
 
         public void SetDistanceFunctionOptimalDistance(double d)
         {
-            this.DistanceToForceFct = x =>
+            DistanceToForceFct = x =>
                 {
                     var dX = x - d;
                     if (dX < 1.0)
                     {
-                        return (dX + 0.01) * this.NegativeForceFactor;
+                        return (dX + 0.01) * NegativeForceFactor;
                     }
                     else
                     {
-                        return dX * this.PositiveForceFactor;
+                        return dX * PositiveForceFactor;
                     }
                 };
         }

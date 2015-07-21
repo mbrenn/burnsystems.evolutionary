@@ -18,7 +18,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
         public double GetFitness(DoubleVectorIndividual individual)
         {
             var result = 1.0;
-            for (var n = 0; n < this.size; n++)
+            for (var n = 0; n < size; n++)
             {
                 var v = individual.Values[n];
                 var diff = Math.Abs((v * v) - (n + 1));
@@ -35,7 +35,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
         /// <param name="variance">Variance for random</param>
         public DoubleVectorIndividual Mutate(Random random, DoubleVectorIndividual individual, double variance)
         {
-            var result = new DoubleVectorIndividual(this.size);
+            var result = new DoubleVectorIndividual(size);
             result.Values = individual.Values.ToArray();
 
             for (var n = 0; n < result.Values.Length; n++)
@@ -48,8 +48,8 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
 
         public DoubleVectorIndividual Generate(Random random)
         {
-            var result = new DoubleVectorIndividual(this.size);
-            for (var n = 0; n < this.size; n++)
+            var result = new DoubleVectorIndividual(size);
+            for (var n = 0; n < size; n++)
             {
                 result.Values[n] = random.NextDouble() * (n + 1);
             }
@@ -59,7 +59,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
 
         public override string ToString()
         {
-            return "Looking for square from 0 to " + this.size.ToString();
+            return "Looking for square from 0 to " + size.ToString();
         }
     }
 }

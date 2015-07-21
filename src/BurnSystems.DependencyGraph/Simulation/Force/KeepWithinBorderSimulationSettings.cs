@@ -20,9 +20,9 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
         public KeepWithinBorderSimulationSettings()
         {
-            this.Min = Vector2d.Zero();
-            this.Max = new Vector2d(300.0, 300.0);
-            this.Force = 10;
+            Min = Vector2d.Zero();
+            Max = new Vector2d(300.0, 300.0);
+            Force = 10;
         }
     }
 }

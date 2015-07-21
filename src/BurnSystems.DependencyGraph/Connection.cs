@@ -31,9 +31,9 @@ namespace BurnSystems.DependencyGraph
 
         public Connection(Node node1, Node node2, double connectivity)
         {
-            this.Node1 = node1;
-            this.Node2 = node2;
-            this.Connectivity = connectivity;
+            Node1 = node1;
+            Node2 = node2;
+            Connectivity = connectivity;
         }
     }
 }

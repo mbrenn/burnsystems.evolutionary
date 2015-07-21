@@ -36,21 +36,21 @@ namespace BurnSystems.DependencyGraph.Simulation
         public FullSimulation(Graph graph, Vector2d area)
         {
             this.area = area;
-            this.LoopTime = TimeSpan.FromSeconds(0.1);
+            LoopTime = TimeSpan.FromSeconds(0.1);
 
             this.graph = graph;
 
-            this.zeroForces = new ZeroForces(graph);
+            zeroForces = new ZeroForces(graph);
 
-            this.forceSimulation = new ConnectionForceSimulation(
+            forceSimulation = new ConnectionForceSimulation(
                 graph,
                 new ConnectionForceSimulationSettings()
                 {
 
                 });
-            this.forceSimulation.Settings.SetDistanceFunctionOptimalDistance(100.0);
+            forceSimulation.Settings.SetDistanceFunctionOptimalDistance(100.0);
 
-            this.keepWithinSimulation = new KeepWithinBorderSimulation(
+            keepWithinSimulation = new KeepWithinBorderSimulation(
                 graph,
                 new KeepWithinBorderSimulationSettings()
                 {
@@ -58,13 +58,13 @@ namespace BurnSystems.DependencyGraph.Simulation
                     Max = this.area
                 });
 
-            this.moveSimulation = new MoveSimulation(
+            moveSimulation = new MoveSimulation(
                 graph,
                 new MoveSimulationSettings()
                 {
                 });
 
-            this.minimumDistanceSimulation = new MinimumDistanceForceSimulation(
+            minimumDistanceSimulation = new MinimumDistanceForceSimulation(
                 graph,
                 new MinimumDistanceForceSimulationSettings()
                 {
@@ -74,7 +74,7 @@ namespace BurnSystems.DependencyGraph.Simulation
         public void ResetNodes()
         {
             var random = new Random();
-            foreach (var node in this.graph.Nodes)
+            foreach (var node in graph.Nodes)
             {
                 node.Position = new Vector2d(random.NextDouble() * area.X, random.NextDouble() * area.Y);
 
@@ -83,12 +83,12 @@ namespace BurnSystems.DependencyGraph.Simulation
 
         public void Loop()
         {
-            this.zeroForces.Loop(this.LoopTime);
-            this.forceSimulation.Loop(this.LoopTime);
-            this.keepWithinSimulation.Loop(this.LoopTime);
-            this.minimumDistanceSimulation.Loop(this.LoopTime);
+            zeroForces.Loop(LoopTime);
+            forceSimulation.Loop(LoopTime);
+            keepWithinSimulation.Loop(LoopTime);
+            minimumDistanceSimulation.Loop(LoopTime);
 
-            this.moveSimulation.Loop(this.LoopTime);
+            moveSimulation.Loop(LoopTime);
         }
     }
 }

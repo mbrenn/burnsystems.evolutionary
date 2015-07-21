@@ -16,7 +16,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
 
         public DoubleVectorIndividual(int size)
         {
-            this.Values = new double[size];
+            Values = new double[size];
         }
 
         public override string ToString()
@@ -24,12 +24,12 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
             var builder = new StringBuilder();
             var komma = "{";
 
-            for (var n = 0; n < this.Values.Length;n++ )
+            for (var n = 0; n < Values.Length;n++ )
             {
                 builder.Append(komma);
                 komma = "; ";
                 builder.Append(
-                    Math.Round(this.Values[n] * this.Values[n], 3).ToString());
+                    Math.Round(Values[n] * Values[n], 3).ToString());
             }
 
             builder.Append("}");

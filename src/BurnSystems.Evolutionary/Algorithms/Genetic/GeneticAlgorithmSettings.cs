@@ -28,9 +28,9 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
 
         public GeneticAlgorithmSettings()
         {
-            this.Rounds = 100;
-            this.Individuals = 100;
-            this.BirthsPerIndividual = 5;
+            Rounds = 100;
+            Individuals = 100;
+            BirthsPerIndividual = 5;
         }
     
     }

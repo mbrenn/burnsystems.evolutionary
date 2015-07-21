@@ -16,7 +16,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
         public MinimumDistanceForceSimulationSettings()
         {
-            this.MinimumDistance = 50.0;
+            MinimumDistance = 50.0;
         }
     }
 }

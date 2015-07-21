@@ -27,7 +27,7 @@ namespace BurnSystems.DependencyGraph
      
         public Node(string title)
         {
-            this.Title = title;
+            Title = title;
         }
     }
 }

@@ -37,13 +37,13 @@ namespace BurnSystems.Evolutionary.Algorithms.Random
             var max = Double.MinValue;
             Individual result = default(Individual);
 
-            if (!this.AsParallel)
+            if (!AsParallel)
             {
                 var rnd = new System.Random();
-                for (var n = 0; n < this.Individuals; n++)
+                for (var n = 0; n < Individuals; n++)
                 {
-                    var individual = this.logic.Generate(rnd);
-                    var current = this.logic.GetFitness(individual);
+                    var individual = logic.Generate(rnd);
+                    var current = logic.GetFitness(individual);
 
                     if (current > max)
                     {
@@ -56,12 +56,12 @@ namespace BurnSystems.Evolutionary.Algorithms.Random
             {
                 Parallel.For<Local>(
                     0,
-                    this.Individuals,
+                    Individuals,
                     () => new Local(),
                     (n, t, local) =>
                     {
-                        var individual = this.logic.Generate(this.randomLocal.Value);
-                        var current = this.logic.GetFitness(individual);
+                        var individual = logic.Generate(randomLocal.Value);
+                        var current = logic.GetFitness(individual);
 
                         if (current > local.MaxValue)
                         {
@@ -94,7 +94,7 @@ namespace BurnSystems.Evolutionary.Algorithms.Random
             public Local()
             {
                 Interlocked.Increment(ref Count);
-                this.MaxValue = Double.MinValue;
+                MaxValue = Double.MinValue;
             }
         }
     }

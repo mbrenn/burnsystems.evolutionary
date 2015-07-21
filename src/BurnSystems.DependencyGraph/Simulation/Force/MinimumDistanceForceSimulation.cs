@@ -19,26 +19,26 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
         public MinimumDistanceForceSimulation(Graph graph, MinimumDistanceForceSimulationSettings settings)
         {
             this.graph = graph;
-            this.Settings = settings;
+            Settings = settings;
         }
 
         public void Loop(TimeSpan loopTime)
         {
             var random = new Random();
-            var nodeCount = this.graph.Nodes.Count;
+            var nodeCount = graph.Nodes.Count;
 
             for (var n = 0; n < (nodeCount - 1); n++)
             {
                 for (var m = n + 1; m < nodeCount; m++)
                 {
-                    var node1 = this.graph.Nodes[n];
-                    var node2 = this.graph.Nodes[m];
+                    var node1 = graph.Nodes[n];
+                    var node2 = graph.Nodes[m];
 
                     var distance = Vector2d.GetDistance(node1.Position, node2.Position);
 
-                    if (distance < this.Settings.MinimumDistance)
+                    if (distance < Settings.MinimumDistance)
                     {
-                        var forceS = (distance - this.Settings.MinimumDistance) / this.Settings.MinimumDistance;
+                        var forceS = (distance - Settings.MinimumDistance) / Settings.MinimumDistance;
 
                         var dX = node1.Position.X - node2.Position.X;
                         var dY = node1.Position.Y - node2.Position.Y;

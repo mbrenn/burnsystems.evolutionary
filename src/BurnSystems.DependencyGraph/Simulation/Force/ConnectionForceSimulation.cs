@@ -22,13 +22,13 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
         public ConnectionForceSimulation(Graph graph, ConnectionForceSimulationSettings settings)
         {
-            this.Graph = graph;
-            this.Settings = settings;
+            Graph = graph;
+            Settings = settings;
         }
 
         public void Loop(TimeSpan loopTime)
         {
-            foreach (var connection in this.Graph.Connectivities)
+            foreach (var connection in Graph.Connectivities)
             {
                 var node1 = connection.Node1;
                 var node2 = connection.Node2;
@@ -40,8 +40,8 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
                     distance = 0.1;
                 }
 
-                var forceS = this.Settings.DistanceToForceFct(distance);
-                forceS *= this.Settings.ForceFactor;
+                var forceS = Settings.DistanceToForceFct(distance);
+                forceS *= Settings.ForceFactor;
                 forceS *= connection.Connectivity;
 
                 var dX = Math.Max(0.1, node1.Position.X - node2.Position.X);

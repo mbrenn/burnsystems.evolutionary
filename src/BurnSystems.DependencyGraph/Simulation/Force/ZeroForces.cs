@@ -16,7 +16,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
         public void Loop(TimeSpan loopTime)
         {
-            foreach (var node in this.graph.Nodes)
+            foreach (var node in graph.Nodes)
             {
                 node.ForceN = Vector2d.Zero();
             }

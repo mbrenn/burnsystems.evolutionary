@@ -17,12 +17,12 @@ namespace BurnSystems.DependencyGraph
 
         public List<Node> Nodes
         {
-            get { return this.nodes; }
+            get { return nodes; }
         }
 
         public List<Connection> Connectivities
         {
-            get { return this.connectivities; }
+            get { return connectivities; }
         }
     }
 }

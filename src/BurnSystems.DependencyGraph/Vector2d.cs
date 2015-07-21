@@ -13,8 +13,8 @@ namespace BurnSystems.DependencyGraph
 
         public Vector2d(double x, double y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
 
         public static Vector2d Zero()
@@ -32,18 +32,18 @@ namespace BurnSystems.DependencyGraph
 
         internal Vector2d Negate()
         {
-            return new Vector2d(-this.X, -this.Y);
+            return new Vector2d(-X, -Y);
         }
 
         public void AddTo(Vector2d force)
         {
-            this.X += force.X;
-            this.Y += force.Y;
+            X += force.X;
+            Y += force.Y;
         }
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}", this.X, this.Y);
+            return string.Format("{0}, {1}", X, Y);
         }
     }
 }

@@ -26,24 +26,24 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
         public T Run()
         {
             var random = new System.Random();
-            var currentItems = new GeneticIndividual<T>[this.settings.Individuals];
-            for (var n = 0; n < this.settings.Individuals; n++)
+            var currentItems = new GeneticIndividual<T>[settings.Individuals];
+            for (var n = 0; n < settings.Individuals; n++)
             {
-                currentItems[n] = new GeneticIndividual<T>(this.logic.Generate(random));
+                currentItems[n] = new GeneticIndividual<T>(logic.Generate(random));
             }
 
-            for (var nRound = 0; nRound < this.settings.Rounds; nRound++)
+            for (var nRound = 0; nRound < settings.Rounds; nRound++)
             {
                 var c = 0;
-                var intermediate = new GeneticIndividual<T>[this.settings.Individuals * this.settings.BirthsPerIndividual];
+                var intermediate = new GeneticIndividual<T>[settings.Individuals * settings.BirthsPerIndividual];
 
-                for (var nIndividual = 0; nIndividual < this.settings.Individuals; nIndividual++)
+                for (var nIndividual = 0; nIndividual < settings.Individuals; nIndividual++)
                 {
                     var individual = currentItems[nIndividual];
-                    for (var nBirth = 0; nBirth < this.settings.BirthsPerIndividual; nBirth++)
+                    for (var nBirth = 0; nBirth < settings.BirthsPerIndividual; nBirth++)
                     {
                         var currentVariance = individual.CurrentVariance + random.NextDouble() - 0.5;
-                        var newIndividual = this.logic.Mutate(
+                        var newIndividual = logic.Mutate(
                             random,
                             individual.Individual, 
                             currentVariance);
@@ -57,13 +57,13 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
 
                 // Store the first 100 into the currentItems
                 currentItems = intermediate
-                    .OrderByDescending(x => this.logic.GetFitness(x.Individual))
-                    .Take(this.settings.Individuals)
+                    .OrderByDescending(x => logic.GetFitness(x.Individual))
+                    .Take(settings.Individuals)
                     .ToArray();
             }
 
             return currentItems.OrderByDescending(
-                x => this.logic.GetFitness(x.Individual)).First().Individual;
+                x => logic.GetFitness(x.Individual)).First().Individual;
         }
     }
 }

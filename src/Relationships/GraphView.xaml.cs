@@ -31,11 +31,11 @@ namespace Relationships
         /// </summary>
         public Graph Graph
         {
-            get { return this.graph; }
+            get { return graph; }
             set
             {
-                this.graph = value;
-                this.InvalidateGraph();
+                graph = value;
+                InvalidateGraph();
             }
         }
 
@@ -50,11 +50,11 @@ namespace Relationships
         public void InvalidateGraph()
         {
             // Most simple implementation
-            this.rootCanvas.Children.Clear();
+            rootCanvas.Children.Clear();
 
-            if (this.graph != null)
+            if (graph != null)
             {
-                foreach (var node in this.graph.Nodes)
+                foreach (var node in graph.Nodes)
                 {
                     var textBlock = new TextBlock();
                     textBlock.Text = node.Title;
@@ -62,10 +62,10 @@ namespace Relationships
                     Canvas.SetLeft(textBlock, node.Position.X);
                     Canvas.SetTop(textBlock, node.Position.Y);
 
-                    this.rootCanvas.Children.Add(textBlock);
+                    rootCanvas.Children.Add(textBlock);
                 }
 
-                foreach (var connectivity in this.graph.Connectivities)
+                foreach (var connectivity in graph.Connectivities)
                 {
                     var line = new Line();
                     line.X1 = connectivity.Node1.Position.X;
@@ -74,7 +74,7 @@ namespace Relationships
                     line.Y2 = connectivity.Node2.Position.Y;
                     line.StrokeThickness = Math.Max(1.0, connectivity.Connectivity);
                     line.Stroke = Brushes.Black;
-                    this.rootCanvas.Children.Add(line);
+                    rootCanvas.Children.Add(line);
                 }
             }
         }
