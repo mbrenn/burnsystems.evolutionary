@@ -1,4 +1,6 @@
 ﻿using BurnSystems.Evolutionary;
+using BurnSystems.Evolutionary.Algorithms.Genetic;
+using BurnSystems.Evolutionary.Algorithms.Random;
 using BurnSystems.Evolutionary.Examples.SquareRoot;
 using System;
 using System.Collections.Generic;

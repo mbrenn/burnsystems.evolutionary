@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BurnSystems.Evolutionary
+namespace BurnSystems.Evolutionary.Algorithms.Genetic
 {
     /// <summary>
     /// Defines an algorithm, which creates a number of instances at the 
@@ -25,7 +25,7 @@ namespace BurnSystems.Evolutionary
 
         public T Run()
         {
-            var random = new Random();
+            var random = new System.Random();
             var currentItems = new GeneticIndividual<T>[this.settings.Individuals];
             for (var n = 0; n < this.settings.Individuals; n++)
             {

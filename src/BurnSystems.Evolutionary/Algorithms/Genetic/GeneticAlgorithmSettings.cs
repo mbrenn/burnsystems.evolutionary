@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BurnSystems.Evolutionary
+namespace BurnSystems.Evolutionary.Algorithms.Genetic
 {
     public class GeneticAlgorithmSettings
     {

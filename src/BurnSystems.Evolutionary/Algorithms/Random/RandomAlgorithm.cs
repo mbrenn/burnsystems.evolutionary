@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BurnSystems.Evolutionary
+namespace BurnSystems.Evolutionary.Algorithms.Random
 {
     public class RandomAlgorithm<Individual>
         where Individual : IIndividual
@@ -25,8 +25,8 @@ namespace BurnSystems.Evolutionary
             this.logic = logic;
         }
 
-        private ThreadLocal<Random> randomLocal = new ThreadLocal<Random>(
-            () => new Random(Environment.TickCount ^ new Guid().GetHashCode()), false);
+        private ThreadLocal<System.Random> randomLocal = new ThreadLocal<System.Random>(
+            () => new System.Random(Environment.TickCount ^ new Guid().GetHashCode()), false);
 
         /// <summary>
         /// Runs the algorithm and returns the best individual
@@ -39,7 +39,7 @@ namespace BurnSystems.Evolutionary
 
             if (!this.AsParallel)
             {
-                var rnd = new Random();
+                var rnd = new System.Random();
                 for (var n = 0; n < this.Individuals; n++)
                 {
                     var individual = this.logic.Generate(rnd);
