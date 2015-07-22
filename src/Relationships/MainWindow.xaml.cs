@@ -26,12 +26,12 @@ namespace Relationships
         /// <summary>
         /// Stores the dispatcher timer
         /// </summary>
-        private DispatcherTimer timer;
+        DispatcherTimer timer;
 
         /// <summary>
         /// Stores the full simulation
         /// </summary>
-        private FullSimulation fullSimulation;
+        FullSimulation fullSimulation;
 
         public MainWindow()
         {
@@ -94,7 +94,7 @@ namespace Relationships
             GraphView.InvalidateGraph();
         }
 
-        private void Restart_Click(object sender, RoutedEventArgs e)
+        void Restart_Click(object sender, RoutedEventArgs e)
         {
             timer.Stop();
             timer = null;

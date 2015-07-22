@@ -26,7 +26,7 @@ namespace TestRunner
             Console.ReadKey();
         }
 
-        private static void ExecuteLoops<T>(int loops, IIndividualLogic<T> logic) where T : IIndividual
+        static void ExecuteLoops<T>(int loops, IIndividualLogic<T> logic) where T : IIndividual
         {
             var notAsParallel = 0.0;
             var asParallel = 0.0;
@@ -103,9 +103,14 @@ namespace TestRunner
                 {
                     Individuals = 100,
                     BirthsPerIndividual = 100,
-                    Rounds = 100
+                    Rounds = 100,
+                    TraceIndividuals = true
                 });
 
+            algo.RoundDone += (x, y) =>
+            {
+                
+            };
             var result = algo.Run();
             watch.Stop();
 

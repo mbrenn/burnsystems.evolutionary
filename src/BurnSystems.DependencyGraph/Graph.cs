@@ -11,9 +11,9 @@ namespace BurnSystems.DependencyGraph
     /// </summary>
     public class Graph
     {
-        private List<Node> nodes = new List<Node>();
+        List<Node> nodes = new List<Node>();
 
-        private List<Connection> connectivities = new List<Connection>();
+        List<Connection> connectivities = new List<Connection>();
 
         public List<Node> Nodes
         {

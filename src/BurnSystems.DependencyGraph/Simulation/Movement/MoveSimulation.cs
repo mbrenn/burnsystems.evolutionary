@@ -8,9 +8,9 @@ namespace BurnSystems.DependencyGraph.Simulation.Movement
 {
     public class MoveSimulation
     {
-        private Graph graph;
+        Graph graph;
 
-        private MoveSimulationSettings settings;
+        MoveSimulationSettings settings;
 
         public MoveSimulation(Graph graph, MoveSimulationSettings settings)
         {

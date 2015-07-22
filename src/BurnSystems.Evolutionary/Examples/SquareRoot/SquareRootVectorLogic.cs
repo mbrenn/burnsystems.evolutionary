@@ -8,7 +8,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
 {
     public class SquareRootVectorLogic : IIndividualLogic<DoubleVectorIndividual>
     {
-        private int size;
+        int size;
 
         public SquareRootVectorLogic(int size)
         {

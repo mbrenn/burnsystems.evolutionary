@@ -12,7 +12,7 @@ namespace BurnSystems.Evolutionary.Algorithms.Random
     {
         public bool AsParallel = false;
 
-        private IIndividualLogic<Individual> logic;
+        IIndividualLogic<Individual> logic;
 
         public int Individuals
         {
@@ -25,7 +25,7 @@ namespace BurnSystems.Evolutionary.Algorithms.Random
             this.logic = logic;
         }
 
-        private ThreadLocal<System.Random> randomLocal = new ThreadLocal<System.Random>(
+        ThreadLocal<System.Random> randomLocal = new ThreadLocal<System.Random>(
             () => new System.Random(Environment.TickCount ^ new Guid().GetHashCode()), false);
 
         /// <summary>

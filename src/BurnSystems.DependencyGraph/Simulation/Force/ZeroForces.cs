@@ -8,7 +8,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 {
     public class ZeroForces
     {
-        private Graph graph;
+        Graph graph;
         public ZeroForces(Graph graph)
         {
             this.graph = graph;

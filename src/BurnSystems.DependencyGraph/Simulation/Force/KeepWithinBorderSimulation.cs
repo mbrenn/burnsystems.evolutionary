@@ -8,7 +8,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 {
     public class KeepWithinBorderSimulation
     {
-        private Graph graph;
+        Graph graph;
 
         public KeepWithinBorderSimulationSettings Settings
         {

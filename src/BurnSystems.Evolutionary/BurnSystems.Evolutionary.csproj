@@ -37,6 +37,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\Genetic\GeneticAlgorithmEventArgs.cs" />
     <Compile Include="Examples\SquareRoot\DoubleIndividual.cs" />
     <Compile Include="Examples\SquareRoot\DoubleVectorIndividual.cs" />
     <Compile Include="Examples\SquareRoot\SquareRootLogic.cs" />

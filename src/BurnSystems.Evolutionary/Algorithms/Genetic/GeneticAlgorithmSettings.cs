@@ -26,6 +26,15 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
             set;
         }
 
+        /// <summary>
+        /// Gets or sets a value whether the individuals shall be traced
+        /// </summary>
+        public bool TraceIndividuals
+        {
+            get;
+            set;
+        }
+
         public GeneticAlgorithmSettings()
         {
             Rounds = 100;

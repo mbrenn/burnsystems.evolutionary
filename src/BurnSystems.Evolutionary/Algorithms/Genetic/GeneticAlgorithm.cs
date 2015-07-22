@@ -13,10 +13,15 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
     /// </summary>
     public class GeneticAlgorithm<T> where T : IIndividual
     {
-        private GeneticAlgorithmSettings settings;
+        GeneticAlgorithmSettings settings;
 
-        private IIndividualLogic<T> logic;
+        IIndividualLogic<T> logic;
 
+        /// <summary>
+        /// This event is called, when the calculation of a specific round is done
+        /// </summary>
+        /// 
+        public event EventHandler<GeneticAlgorithmEventArgs<T>> RoundDone;
         public GeneticAlgorithm(IIndividualLogic<T> logic, GeneticAlgorithmSettings settings)
         {
             this.logic = logic;
@@ -39,17 +44,23 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
 
                 for (var nIndividual = 0; nIndividual < settings.Individuals; nIndividual++)
                 {
-                    var individual = currentItems[nIndividual];
+                    var parentIndividual = currentItems[nIndividual];
                     for (var nBirth = 0; nBirth < settings.BirthsPerIndividual; nBirth++)
                     {
-                        var currentVariance = individual.CurrentVariance + random.NextDouble() - 0.5;
+                        var currentVariance = parentIndividual.CurrentVariance + random.NextDouble() - 0.5;
                         var newIndividual = logic.Mutate(
                             random,
-                            individual.Individual, 
+                            parentIndividual.Individual, 
                             currentVariance);
 
                         intermediate[c] = new GeneticIndividual<T>(newIndividual);
                         intermediate[c].CurrentVariance = currentVariance;
+
+                        // Add parents, if requested
+                        if (settings.TraceIndividuals)
+                        {
+                            intermediate[c].Parent = parentIndividual;
+                        }
 
                         c++;
                     }
@@ -60,10 +71,25 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
                     .OrderByDescending(x => logic.GetFitness(x.Individual))
                     .Take(settings.Individuals)
                     .ToArray();
+
+                // Everything is done... Call the RoundDone event
+                OnRoundDone(currentItems);
             }
 
             return currentItems.OrderByDescending(
                 x => logic.GetFitness(x.Individual)).First().Individual;
+        }
+
+        /// <summary>
+        /// Calls the RoundDone event
+        /// </summary>
+        void OnRoundDone(IEnumerable<GeneticIndividual<T>> individuals)
+        {
+            var ev = this.RoundDone;
+            if (ev != null)
+            {
+                ev(this, new GeneticAlgorithmEventArgs<T>(this, individuals));
+            }
         }
     }
 }

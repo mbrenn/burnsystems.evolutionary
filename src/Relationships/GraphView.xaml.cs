@@ -24,7 +24,7 @@ namespace Relationships
         /// <summary>
         /// Stores the graph instance
         /// </summary>
-        private Graph graph;
+        Graph graph;
 
         /// <summary>
         /// Gets or sets the graph to be shown

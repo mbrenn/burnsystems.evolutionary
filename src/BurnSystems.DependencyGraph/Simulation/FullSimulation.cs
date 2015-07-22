@@ -13,19 +13,19 @@ namespace BurnSystems.DependencyGraph.Simulation
         /// <summary>
         /// Stores the graph
         /// </summary>
-        private Graph graph;
+        Graph graph;
 
-        private ZeroForces zeroForces;
+        ZeroForces zeroForces;
 
-        private ConnectionForceSimulation forceSimulation;
+        ConnectionForceSimulation forceSimulation;
 
-        private KeepWithinBorderSimulation keepWithinSimulation;
+        KeepWithinBorderSimulation keepWithinSimulation;
 
-        private MinimumDistanceForceSimulation minimumDistanceSimulation;
+        MinimumDistanceForceSimulation minimumDistanceSimulation;
 
-        private MoveSimulation moveSimulation;
+        MoveSimulation moveSimulation;
 
-        private Vector2d area;
+        Vector2d area;
 
         public TimeSpan LoopTime
         {

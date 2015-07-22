@@ -8,7 +8,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 {
     public class MinimumDistanceForceSimulation
     {
-        private Graph graph;
+        Graph graph;
 
         public MinimumDistanceForceSimulationSettings Settings
         {

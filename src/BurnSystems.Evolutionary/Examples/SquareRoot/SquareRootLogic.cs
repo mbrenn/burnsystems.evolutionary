@@ -71,7 +71,7 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
                 Math.Sqrt(SquareRootOf).ToString());
         }
 
-        private static int calculationCount = 0;
+        static int calculationCount = 0;
 
         public static void ResetCalculationCount()
         {
