@@ -82,5 +82,14 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
         {
             return calculationCount;
         }
+
+        public DoubleIndividual Combine(Random random, DoubleIndividual individual1, DoubleIndividual individual2)
+        {
+            var randomValue = random.NextDouble();
+            return new DoubleIndividual()
+            {
+                Value = individual1.Value * randomValue + individual2.Value * (1 - randomValue)
+            };
+        }
     }
 }

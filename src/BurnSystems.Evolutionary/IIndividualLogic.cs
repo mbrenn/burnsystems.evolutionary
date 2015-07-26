@@ -27,5 +27,14 @@ namespace BurnSystems.Evolutionary
         /// <param name="individual">Individual to be modified</param>
         /// <param name="variance">Variance for random</param>
         T Mutate(Random random, T individual, double variance);
+
+        /// <summary>
+        /// Combines two individuals randomly
+        /// </summary>
+        /// <param name="random">Random generator to be used</param>
+        /// <param name="individual1">First individual being combined</param>
+        /// <param name="individual2">Second individual being combined</param>
+        /// <returns>The new individual</returns>
+        T Combine(Random random, T individual1, T individual2);
     }
 }

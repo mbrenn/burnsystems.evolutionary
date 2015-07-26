@@ -57,6 +57,26 @@ namespace BurnSystems.Evolutionary.Examples.SquareRoot
             return result;
         }
 
+        public DoubleVectorIndividual Combine(Random random, DoubleVectorIndividual individual1, DoubleVectorIndividual individual2)
+        {
+            var randomValue = random.Next(0, this.size);
+            var result = new DoubleVectorIndividual(this.size);
+
+            for (var n = 0; n < this.size; n++)
+            {
+                if (n < randomValue)
+                {
+                    result.Values[n] = individual1.Values[n];
+                }
+                else
+                {
+                    result.Values[n] = individual2.Values[n];
+                }
+            }
+
+            return result;
+        }
+
         public override string ToString()
         {
             return "Looking for square from 0 to " + size.ToString();
