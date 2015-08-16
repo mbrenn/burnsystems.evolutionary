@@ -38,6 +38,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\Genetic\GeneticAlgorithmEventArgs.cs" />
+    <Compile Include="Algorithms\IAlgorithm.cs" />
+    <Compile Include="Algorithms\MultipleRounds.cs" />
     <Compile Include="Examples\SquareRoot\DoubleIndividual.cs" />
     <Compile Include="Examples\SquareRoot\DoubleVectorIndividual.cs" />
     <Compile Include="Examples\SquareRoot\SquareRootLogic.cs" />

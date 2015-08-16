@@ -6,14 +6,15 @@
     <ProjectGuid>5ae112f7-0023-4611-80eb-b8899acf4e3a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>AlgorithmEvaluation.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\BurnSystems.Evolutionary\bin\Debug\</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>AlgorithmEvaluation</Name>
     <RootNamespace>AlgorithmEvaluation</RootNamespace>
-    <InterpreterId>{80659ab7-4d53-4e0c-8588-a766116cbd46}</InterpreterId>
-    <InterpreterVersion>2.7</InterpreterVersion>
+    <InterpreterId>
+    </InterpreterId>
+    <InterpreterVersion>
+    </InterpreterVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,9 +33,6 @@
       <Project>{ee651cda-954d-488d-b30d-a1c644bf03e5}</Project>
       <Private>True</Private>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="{80659ab7-4d53-4e0c-8588-a766116cbd46}\2.7" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

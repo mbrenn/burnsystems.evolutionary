@@ -7,12 +7,17 @@ using System.Threading.Tasks;
 
 namespace BurnSystems.Evolutionary.Algorithms.Random
 {
-    public class RandomAlgorithm<Individual>
+    public class RandomAlgorithm<Individual> : IAlgorithm<Individual>
         where Individual : IIndividual
     {
         public bool AsParallel = false;
 
         IIndividualLogic<Individual> logic;
+
+        public IIndividualLogic<Individual> Logic
+        {
+            get { return logic; }
+        }
 
         public int Individuals
         {

@@ -9,9 +9,9 @@ namespace BurnSystems.Evolutionary
     public interface IIndividualLogic<T> where T : IIndividual
     {
         /// <summary>
-        /// Gets the fitness of the individual 
+        /// Gets the fitness of the individual. Higher numbers reflect good fitness
         /// </summary>
-        /// <param name="individual">The individual whose fitness is assessed. Higher numbers reflect good fitness</param>
+        /// <param name="individual">The individual whose fitness is assessed. </param>
         /// <returns>The fitness of the individual</returns>
         double GetFitness(T individual);
 

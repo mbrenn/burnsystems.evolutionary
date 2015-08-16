@@ -11,11 +11,16 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
     /// start of the optimisation and then randomizes the values of each individual. 
     /// After that, the values with the highest fitness will survive
     /// </summary>
-    public class GeneticAlgorithm<T> where T : IIndividual
+    public class GeneticAlgorithm<T> : IAlgorithm<T> where T : IIndividual
     {
         GeneticAlgorithmSettings settings;
 
         IIndividualLogic<T> logic;
+
+        public IIndividualLogic<T> Logic
+        {
+            get { return this.logic; }
+        }
 
         /// <summary>
         /// This event is called, when the calculation of a specific round is done
