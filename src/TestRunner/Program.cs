@@ -23,6 +23,8 @@ namespace TestRunner
 
             var vectorLogic = new SquareRootVectorLogic(10);
             ExecuteLoops(loops, vectorLogic);
+
+            Console.WriteLine("Press key...");
             Console.ReadKey();
         }
 

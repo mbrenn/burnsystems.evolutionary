@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BurnSystems.Evolutionary.Algorithms.Genetic
@@ -35,41 +36,49 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
 
         public T Run()
         {
-            var random = new System.Random();
+            var randomLocal = new ThreadLocal<System.Random>(
+                () => new System.Random(Environment.TickCount ^ new Guid().GetHashCode()), 
+                false);
+
             var currentItems = new GeneticIndividual<T>[settings.Individuals];
             for (var n = 0; n < settings.Individuals; n++)
             {
-                currentItems[n] = new GeneticIndividual<T>(logic.Generate(random));
+                currentItems[n] = new GeneticIndividual<T>(logic.Generate(randomLocal.Value));
             }
 
             for (var nRound = 0; nRound < settings.Rounds; nRound++)
             {
-                var c = 0;
                 var intermediate = new GeneticIndividual<T>[settings.Individuals * settings.BirthsPerIndividual];
 
-                for (var nIndividual = 0; nIndividual < settings.Individuals; nIndividual++)
-                {
-                    var parentIndividual = currentItems[nIndividual];
-                    for (var nBirth = 0; nBirth < settings.BirthsPerIndividual; nBirth++)
+                Parallel.For(
+                    0,
+                    settings.Individuals,
+                    new Action<int>((nIndividual) =>
                     {
-                        var currentVariance = parentIndividual.CurrentVariance + random.NextDouble() - 0.5;
-                        var newIndividual = logic.Mutate(
-                            random,
-                            parentIndividual.Individual, 
-                            currentVariance);
-
-                        intermediate[c] = new GeneticIndividual<T>(newIndividual);
-                        intermediate[c].CurrentVariance = currentVariance;
-
-                        // Add parents, if requested
-                        if (settings.TraceIndividuals)
+                        var random = randomLocal.Value;
+                        var c = nIndividual * settings.BirthsPerIndividual;
+                        var parentIndividual = currentItems[nIndividual];
+                        for (var nBirth = 0; nBirth < settings.BirthsPerIndividual; nBirth++)
                         {
-                            intermediate[c].Parent = parentIndividual;
-                        }
+                            var currentVariance =
+                                parentIndividual.CurrentVariance + random.NextDouble() - 0.5;
+                            var newIndividual = logic.Mutate(
+                                random,
+                                parentIndividual.Individual,
+                                currentVariance);
 
-                        c++;
-                    }
-                }
+                            intermediate[c] = new GeneticIndividual<T>(newIndividual);
+                            intermediate[c].CurrentVariance = currentVariance;
+
+                            // Add parents, if requested
+                            if (settings.TraceIndividuals)
+                            {
+                                intermediate[c].Parent = parentIndividual;
+                            }
+
+                            c++;
+                        }
+                }));
 
                 // Store the first 100 into the currentItems
                 currentItems = intermediate

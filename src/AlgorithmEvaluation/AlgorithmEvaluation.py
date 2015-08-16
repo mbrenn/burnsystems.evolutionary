@@ -1,6 +1,6 @@
 ﻿import math
 import clr
-
+import csv
 
 clr.AddReference("BurnSystems.Evolutionary")
 
@@ -15,14 +15,35 @@ logic = SquareRootVectorLogic(10)
 algorithm = GeneticAlgorithm[DoubleVectorIndividual](logic, settings)
 multipleRounds = MultipleRounds[DoubleVectorIndividual](algorithm, 10)
 
+with open("rounds.csv", "wb") as csvfile:
 
+    csvwriter = csv.writer(csvfile, delimiter=",")
 
-for  x in range(0,12):
+    for x in range(0,20):
     
-    settings.Rounds = math.pow(2, x)
-    bestIndividual = multipleRounds.Run()
-    print(bestIndividual.ToString())
+        settings.Rounds = math.pow(1.5, x)
+        bestIndividual = multipleRounds.Run()
+        fitness = logic.GetFitness(bestIndividual).ToString()
 
-    print("Best Fitness: " + logic.GetFitness(bestIndividual).ToString())
+        print("# Rounds: " + settings.Rounds.ToString())
+        print("Best Fitness: " + fitness)
+
+        csvwriter.writerow([settings.Rounds, fitness])
+        
+with open("individuals.csv", "wb") as csvfile:
+
+    csvwriter = csv.writer(csvfile, delimiter=",")
+
+    for x in range(0,20):
+    
+        settings.Rounds = 100
+        settings.Individuals = math.pow(1.5, x)
+        bestIndividual = multipleRounds.Run()
+        fitness = logic.GetFitness(bestIndividual).ToString()
+
+        print("# Individuals: " + settings.Individuals.ToString())
+        print("Best Fitness: " + fitness)
+
+        csvwriter.writerow([settings.Individuals, fitness])
 
 

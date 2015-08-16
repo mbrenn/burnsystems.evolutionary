@@ -35,11 +35,23 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
             set;
         }
 
+        /// <summary>
+        /// Gets the number of additional individuals which are created
+        /// by combining two individuals.
+        /// The number can be 0
+        /// </summary>
+        public int CombinationCount
+        {
+            get;
+            set;
+        }
+
         public GeneticAlgorithmSettings()
         {
             Rounds = 100;
             Individuals = 100;
             BirthsPerIndividual = 5;
+            CombinationCount = 30;
         }
     
     }
