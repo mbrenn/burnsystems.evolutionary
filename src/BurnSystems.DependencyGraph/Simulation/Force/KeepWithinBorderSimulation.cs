@@ -44,7 +44,7 @@ namespace BurnSystems.DependencyGraph.Simulation.Force
 
                 if (node.Position.X > Settings.Max.X)
                 {
-                    node.ForceN.X += Settings.Force;
+                    node.ForceN.X -= Settings.Force;
                 }
 
                 if (node.Position.Y > Settings.Max.Y)
