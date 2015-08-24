@@ -36,6 +36,15 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
         }
 
         /// <summary>
+        /// Gets or sets the value whether the two individuals are combined
+        /// </summary>
+        public bool IsCombined
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the GeneticIndividual
         /// </summary>
         /// <param name="individual">Individual being added</param>

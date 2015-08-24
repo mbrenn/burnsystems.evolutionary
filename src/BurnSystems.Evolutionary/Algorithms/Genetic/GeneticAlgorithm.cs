@@ -48,8 +48,11 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
 
             for (var nRound = 0; nRound < settings.Rounds; nRound++)
             {
-                var intermediate = new GeneticIndividual<T>[settings.Individuals * settings.BirthsPerIndividual];
+                var individualsInRound =
+                    (settings.Individuals * settings.BirthsPerIndividual) + settings.CombinedIndividuals;
+                var intermediate = new GeneticIndividual<T>[individualsInRound];
 
+                var totalCreated = 0;
                 Parallel.For(
                     0,
                     settings.Individuals,
@@ -79,6 +82,26 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
                             c++;
                         }
                 }));
+
+                totalCreated += settings.Individuals * settings.BirthsPerIndividual;
+
+                // Now do the combination
+                for (var n = 0; n < settings.CombinedIndividuals; n++)
+                {
+                    var random = randomLocal.Value;
+                    var first = random.Next(0, totalCreated);
+                    var second = random.Next(0, totalCreated);
+                    var firstItem = intermediate[first];
+                    var secondItem = intermediate[second];
+                    var newIndividual = logic.Combine(random, intermediate[first].Individual, intermediate[second].Individual);
+                    intermediate[totalCreated] = new GeneticIndividual<T>(
+                        newIndividual)
+                    {
+                        CurrentVariance = (firstItem.CurrentVariance + secondItem.CurrentVariance) * 0.5
+                    };
+
+                    totalCreated++;
+                }
 
                 // Store the first 100 into the currentItems
                 currentItems = intermediate

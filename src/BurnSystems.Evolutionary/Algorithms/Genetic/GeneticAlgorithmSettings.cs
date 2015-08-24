@@ -40,7 +40,7 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
         /// by combining two individuals.
         /// The number can be 0
         /// </summary>
-        public int CombinationCount
+        public int CombinedIndividuals
         {
             get;
             set;
@@ -51,7 +51,7 @@ namespace BurnSystems.Evolutionary.Algorithms.Genetic
             Rounds = 100;
             Individuals = 100;
             BirthsPerIndividual = 5;
-            CombinationCount = 30;
+            CombinedIndividuals = 30;
         }
     
     }

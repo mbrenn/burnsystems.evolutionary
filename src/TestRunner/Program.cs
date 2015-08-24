@@ -106,7 +106,8 @@ namespace TestRunner
                     Individuals = 100,
                     BirthsPerIndividual = 100,
                     Rounds = 100,
-                    TraceIndividuals = true
+                    TraceIndividuals = true,
+                    CombinedIndividuals = 50
                 });
 
             algo.RoundDone += (x, y) =>

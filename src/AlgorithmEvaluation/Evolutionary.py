@@ -1,12 +1,14 @@
 ﻿import math
+import sys
+sys.path.append('C:\\Users\\brenn\\Documents\\GitHubVisualStudio\\burnsystems.evolutionary\\src\\BurnSystems.Evolutionary\\bin\\Debug')
+
 import clr
-import csv
-
 clr.AddReference("BurnSystems.Evolutionary")
-
+    
 from BurnSystems.Evolutionary.Algorithms import *
 from BurnSystems.Evolutionary.Algorithms.Genetic import *
 from BurnSystems.Evolutionary.Examples.SquareRoot import *
+
 
 settings = GeneticAlgorithmSettings()
 logic = SquareRootVectorLogic(10)
@@ -15,35 +17,41 @@ logic = SquareRootVectorLogic(10)
 algorithm = GeneticAlgorithm[DoubleVectorIndividual](logic, settings)
 multipleRounds = MultipleRounds[DoubleVectorIndividual](algorithm, 10)
 
-with open("rounds.csv", "wb") as csvfile:
+def GetGeneticAlgorithm():
+    return algorithm
 
-    csvwriter = csv.writer(csvfile, delimiter=",")
+def GetMultipleRounds():
+    return multipleRounds
 
-    for x in range(0,20):
-    
-        settings.Rounds = math.pow(1.5, x)
+def TestRounds(rounds):
+    n = 1.0
+    result = []
+    while n < rounds:    
+        n = n * 1.5
+        settings.Rounds = n
         bestIndividual = multipleRounds.Run()
         fitness = logic.GetFitness(bestIndividual).ToString()
+
+        result.append(fitness)
 
         print("# Rounds: " + settings.Rounds.ToString())
         print("Best Fitness: " + fitness)
 
-        csvwriter.writerow([settings.Rounds, fitness])
-        
-with open("individuals.csv", "wb") as csvfile:
+    return result
 
-    csvwriter = csv.writer(csvfile, delimiter=",")
-
-    for x in range(0,20):
-    
+def TestIndividuals(maxIndividuals):    
+    n = 1.0    
+    result = []
+    while n < maxIndividuals:    
+        n = n * 1.5
         settings.Rounds = 100
-        settings.Individuals = math.pow(1.5, x)
+        settings.Individuals = n
         bestIndividual = multipleRounds.Run()
         fitness = logic.GetFitness(bestIndividual).ToString()
 
+        result.append(fitness)
+
         print("# Individuals: " + settings.Individuals.ToString())
         print("Best Fitness: " + fitness)
-
-        csvwriter.writerow([settings.Individuals, fitness])
-
-
+        
+    return result
